@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
+from dotenv import load_dotenv
 import time
 import random
 import pickle
@@ -9,6 +10,10 @@ from selenium.webdriver.ie.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
+load_dotenv()
+
+EMAIL = os.getenv("LINKEDIN_EMAIL")
+PASSWORD = os.getenv("LINKEDIN_PASSWORD")
 
 
 def type_with_delay(element, text, min_delay=0.1, max_delay=0.5):
@@ -41,16 +46,12 @@ else:
     email_element = driver.find_element(By.ID, "username")
     password_element = driver.find_element(By.ID, "password")
 
-    type_with_delay(email_element, "ethan.adg@proton.me")
-    type_with_delay(password_element, "E>ADEGBEYENI")
+    type_with_delay(email_element, EMAIL)
+    type_with_delay(password_element, PASSWORD)
 
     sign_in_button = driver.find_element(By.CLASS_NAME, "btn__primary--large")
     time.sleep(random.uniform(1,3)) #random delay between 1 and 3 befor clicking button
     sign_in_button.click()
-
-
-
-
 
 try:
 
