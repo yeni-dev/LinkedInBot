@@ -13,6 +13,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 load_dotenv()
 
+
 EMAIL = os.getenv("LINKEDIN_EMAIL")
 PASSWORD = os.getenv("LINKEDIN_PASSWORD")
 
@@ -63,33 +64,43 @@ def save_cookies(driver):
     except Exception as e:
         print(f"An error occurred while saving cookies: {e}")
 
+
 def perform_search(driver, term):
     """Searches for a term on LinkedIn and applies the 'People' filter."""
-    search_icon = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, "search-global-typeahead__collapsed-search-button"))
-    )
-    search_icon.click()
 
-    search_bar = WebDriverWait(driver, 10).until(
-        EC.element_to_be_clickable((By.CSS_SELECTOR, ".search-global-typeahead__input"))
-    )
-    print("Search located")
-    driver.execute_script("arguments[0].scrollIntoView(true);", search_bar)
-    search_bar.click()
-    time.sleep(random.uniform(1, 2))
+    # Get the search bar value without clicking on it
+    search_value = driver.execute_script("return document.querySelector('.search-global-typeahead__input').value;")
 
-    type_with_delay(search_bar, term)
-    time.sleep(random.uniform(1, 2))
-    search_bar.send_keys(Keys.RETURN)
-    print("Typed search term and submitted.")
-    time.sleep(random.uniform(3, 6))
+    if not search_value.strip():  # If search bar is empty, click the search icon and type the term
+        search_icon = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "search-global-typeahead__collapsed-search-button"))
+        )
+        search_icon.click()
 
-    people_filter = WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.CSS_SELECTOR, "li.search-reusables__primary-filter:nth-child(2) > button:nth-child(1)"))
-    )
-    people_filter.click()
-    time.sleep(random.uniform(3, 6))
-    print("Clicked on people filter")
+        search_bar = WebDriverWait(driver, 10).until(
+            EC.element_to_be_clickable((By.CSS_SELECTOR, ".search-global-typeahead__input"))
+        )
+        print("Search located")
+        driver.execute_script("arguments[0].scrollIntoView(true);", search_bar)
+
+        print("Search bar is empty, retyping search query.")
+        type_with_delay(search_bar, term)
+        time.sleep(random.uniform(1, 2))
+        search_bar.send_keys(Keys.RETURN)
+        print("Typed search term and submitted.")
+        time.sleep(random.uniform(3, 6))
+
+        people_filter = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located(
+                (By.CSS_SELECTOR, "li.search-reusables__primary-filter:nth-child(4) > button:nth-child(1)"))
+        )
+        people_filter.click()
+        time.sleep(random.uniform(3, 6))
+        print("Clicked on people filter")
+    else:
+        print("Search bar already contains search term, skipping retyping.")
+
+
 
 def get_profile_links(driver):
     """Extracts profile links from the search results page."""
@@ -126,7 +137,7 @@ def process_profiles(driver, profile_links):
     print(tabulate(table, headers=["No.", "Profile URL"], tablefmt="pretty"))
     print("Links found")
 
-def check_if_logged_out(driver):
+def check_if_logged_out(driver, count):
     """Checks if the user has been logged out of LinkedIn."""
     try:
         driver.find_element(By.ID, "username")
@@ -135,9 +146,13 @@ def check_if_logged_out(driver):
         exit()
     except:
         print("Session is still active")
+        count += 1
+
+    return count
 
 def main():
     """Main execution loop for the bot."""
+    count = 0
     driver = setup_driver()
 
     if not load_cookies(driver):
@@ -145,13 +160,26 @@ def main():
         save_cookies(driver)
 
     while True:
-        perform_search(driver, "cybersecurity")
+        perform_search(driver, "cyber security")
         profile_links = get_profile_links(driver)
-        process_profiles(driver, profile_links)
-        check_if_logged_out(driver)
-
+        # process_profiles(driver, profile_links)
+        time.sleep(random.uniform(5, 10))
         driver.refresh()
-        time.sleep(random.uniform(10, 20))
+
+        # Call check_if_logged_out and assign the updated count back to count
+        count = check_if_logged_out(driver, count)
+        print(f"Run Count: {count}")
+
+        # Check if the count reached 3 to stop
+        if count == 2:
+            print("Run 3 times, ending process")
+            print(f"Found & Processed {len(profile_links)} profiles")
+            driver.quit()
+            break  # To exit the loop after 3 runs
+
+
+
+
 
 if __name__ == "__main__":
     main()
