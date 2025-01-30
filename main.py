@@ -1,3 +1,10 @@
+# Author: yeni-dev
+# Project: LinkedIn Automation Bot
+# Date: 01/2025
+# GitHub: https://github.com/yeni-dev/LinkedInBot
+
+
+
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -183,3 +190,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# This code is developed by yeni-dev – Please contact me for collaboration opportunities or use.
+# This code is developed by yeni-dev – Please contact me for collaboration opportunities or use.
