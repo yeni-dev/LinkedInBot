@@ -1,66 +1,58 @@
-# LinkedInBot Connection Bot
+# LinkedIn Automation Tool
 
-This project is a Python-based LinkedIn automation bot using Selenium for browser automation. The bot automates LinkedIn searches, collects profile links, and displays them in a table. Future updates will add AI for personalized connection messages and intelligent decision-making.
+## Overview
+This project is a Python-based automation tool that interacts with LinkedIn using Selenium and `undetected_chromedriver`. Its core functionality is automating connection requests to LinkedIn profiles based on search terms, with randomized delays to mimic human interaction and reduce detection risk.
+
+The script:
+- Logs into LinkedIn using stored credentials or session cookies.
+- Performs searches for specified keywords.
+- Filters results to "People."
+- Iterates through search result pages, automatically sending connection requests.
+- Implements runtime limits, randomized typing, and scrolling delays for stealth.
 
 ## Features
-- ✅ Automated login with cookies for session persistence.
-- ✅ Perform LinkedIn searches using specified keywords.
-- ✅ Apply search filters to find people.
-- ✅ Collect and store profile links.
-- ✅ Open and analyze profiles in new tabs.
-- ✅ Display results using tabulate for clear viewing.
-- ⬜ Intelligent AI-based profile analysis.
-- ⬜ Generate personalized connection messages using AI.
-- ⬜ Automate connection requests with messages.
-- ⬜ Implement error handling and edge case management.
+- **Cookie-Based Login**: Saves and reuses session cookies to avoid repeated credential entry.
+- **Search Automation**: Randomly selects from a list of keywords and performs searches.
+- **Connection Automation**: Automatically clicks "Connect" buttons and confirms requests.
+- **Stealth Mode**: Randomized typing, delays, and scrolling patterns to simulate human behavior.
+- **Error Handling**: Handles modal dialogs, missing buttons, and timeouts gracefully.
+- **Runtime Control**: Restricts automation to a defined duration (default: 10 minutes).
 
-## Roadmap
+## Potential Future Features
+- **Job Search Automation**  
+  Automate job searches with filters (e.g., location, remote, experience level) and export results.
+- **Auto-Messaging**  
+  Send customized introductory messages with connection requests.
+- **Profile Scraping**  
+  Extract structured data (name, title, location, company) for analysis or lead generation.
+- **Connection Management**  
+  Track who accepted requests and maintain connection growth analytics.
+- **Integration with Databases/CRMs**  
+  Store contacts and job listings directly into databases or CRM systems.
+- **GUI Dashboard**  
+  Build a simple interface for non-technical users to configure searches and view results.
 
-### Phase 1: Core Automation (Completed)
-- ✅ Implement login system using cookies.
-- ✅ Perform automated LinkedIn search using input keywords.
-- ✅ Apply people filter to narrow results.
-- ✅ Scrape profile links.
-- ✅ Display links in a formatted table.
 
-### Phase 2: Profile Management (In Progress)
-- ✅ Open profiles in new tabs for future data extraction.
-- ⬜ Extract relevant profile data using AI.
-- ⬜ Analyze and assess profile suitability.
-- ⬜ Provide a summary of analyzed profiles.
+## Installation
+1. Clone the repository and navigate into it:
+   bash
+   git clone https://github.com/yeni-dev/LinkedInTool.git && cd LinkedInTool
 
-### Phase 3: Connection Automation (Upcoming)
-- ⬜ Generate personalized connection messages using AI.
-- ⬜ Send automated connection requests.
-- ⬜ Implement connection request tracking.
 
-### Phase 4: Enhancements
-- ⬜ Implement AI to detect and avoid bot detection.
-- ⬜ Add logging and monitoring features.
-- ⬜ Optimize browser management and memory usage.
+2. Install the required dependencies:
 
-## Getting Started
-1. Clone the repository:
-    ```bash
-    git clone https://github.com/your_username/LinkedInConnectionBot.git
-    ```
-2. Install dependencies:
-    ```bash
-    pip install -r requirements.txt
-    ```
-3. Set up environment variables by creating a `.env` file with your LinkedIn credentials:
-    ```bash
-    LINKEDIN_EMAIL=your_email
-    LINKEDIN_PASSWORD=your_password
-    ```
-4. Run the bot:
-    ```bash
-    python main.py
-    ```
+   bash
+   pip install -r requirements.txt
 
-## Contributing
-Contributions are welcome! Please open an issue or submit a pull request for any feature suggestions or bug fixes.
+3. Create a `.env` file in the project root and add your LinkedIn credentials:
 
-## License
-This project is licensed under the MIT License.
+   
+   LINKEDIN_EMAIL=your_email
+   LINKEDIN_PASSWORD=your_password
+   ```
+4. Run the tool:
+
+   bash
+   python3 linkedin_tool.py
+   
 
