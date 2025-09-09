@@ -45,12 +45,12 @@ The script:
    pip install -r requirements.txt
 
 3. Create a `.env` file in the project root and add your LinkedIn credentials:
-
    
    LINKEDIN_EMAIL=your_email
+   
    LINKEDIN_PASSWORD=your_password
-   ```
-4. Run the tool:
+  
+5. Run the tool:
 
    bash
    python3 linkedin_tool.py
