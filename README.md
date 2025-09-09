@@ -1,7 +1,7 @@
 # LinkedIn Automation Tool
 
 ## Overview
-This demonstration project is a Python-based automation tool that interacts with LinkedIn using Selenium and `chromedriver`. Its core functionality is automating connection requests to LinkedIn profiles based on search terms, with randomized delays to mimic human interaction and reduce detection risk.
+This demonstration project is a Python-based automation tool that interacts with LinkedIn using Selenium and `webdriver`. Its core functionality is automating connection requests to LinkedIn profiles based on search terms, with randomized delays to mimic human interaction and reduce detection risk.
 
 The script:
 - Logs into LinkedIn using stored credentials or session cookies.
